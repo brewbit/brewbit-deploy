@@ -1,8 +1,6 @@
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
-set :repo_url, 'git@github.com:brewbit/brewbit-spree.git'
-
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
@@ -27,3 +25,8 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets}
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+set :ssh_options, {
+  keys: %w(~/.ssh/brewbit ~/.ssh/id_rsa),
+  forward_agent: true,
+  auth_methods: %w(publickey)
+}

@@ -9,3 +9,4 @@ gem 'capistrano-rvm', group: :development
 gem 'capistrano-bundler', group: :development
 gem 'capistrano-rails', group: :development
 gem 'capistrano3-puma', group: :development
+gem 'capistrano-multiconfig', group: :development
