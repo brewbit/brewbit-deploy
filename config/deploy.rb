@@ -31,32 +31,33 @@ set :ssh_options, {
   auth_methods: %w(publickey)
 }
 
-
 namespace :deploy do
   namespace :services do
   
     desc "Restart all the services"
     task :restart do
-      run "#{sudo} restart #{application}"
+      execute :sudo, "restart #{fetch(:application)}"
     end
   
     desc "Wipe and recreate the upstart scripts - (also restarts the services)"
     task :reinstall do
-      raise "STOP!!!" if application.nil?
-  
-      begin
-        run "#{sudo} stop #{application}"
-      rescue
-        # don't care if we can't stop. just means it wasn't running
+      on roles(:all) do
+        begin
+          execute :sudo, "stop #{fetch(:application)}"
+        rescue
+          # don't care if we can't stop. just means it wasn't running
+        end
+    
+        execute :sudo, "rm -f /etc/init/#{fetch(:application)}*"
+    
+        within release_path do
+          execute :sudo, "bundle exec foreman export upstart /etc/init -a #{fetch(:application)} -f Procfile.#{fetch(:stage).split(':').last} -u deploy -c app=1"
+        end
+    
+        # Insert command to start service at boot time NOTE this does not work on the mac version of sed which is not GNU sed
+        execute :sudo, "sed -i '1 i start on runlevel [2345]' /etc/init/#{fetch(:application)}.conf"
+        execute :sudo, "start #{fetch(:application)}"
       end
-  
-      run "#{sudo} rm -f /etc/init/#{application}*"
-  
-      run "cd #{current_path}; #{sudo} bundle exec foreman export upstart /etc/init -a #{application} -f #{current_path}/Procfile.#{stage} -u #{user} -c app=1"
-  
-      # Insert command to start service at boot time NOTE this does not work on the mac version of sed which is not GNU sed
-      run "#{sudo} sed -i '1 i start on runlevel [2345]' /etc/init/#{application}.conf"
-      run "#{sudo} start #{application}"
     end
   
     after "deploy:updated", "deploy:services:reinstall"

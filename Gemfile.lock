@@ -13,11 +13,6 @@ GEM
     capistrano-rails (1.1.1)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
-    capistrano-rvm (0.1.1)
-      capistrano (~> 3.0)
-      sshkit (~> 1.2)
-    capistrano3-puma (0.2.2)
-      capistrano (~> 3.0)
     i18n (0.6.9)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -39,5 +34,3 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-multiconfig
   capistrano-rails
-  capistrano-rvm
-  capistrano3-puma
