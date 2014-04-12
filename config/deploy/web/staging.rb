@@ -1,9 +1,11 @@
 
 set :application, 'staging.brewbit.com'
 
-role :app, %w{deploy@staging.brewbit.com}
-role :web, %w{deploy@staging.brewbit.com}
-role :db,  %w{deploy@staging.brewbit.com}
+deploy_host = ENV['DEPLOY_HOST'] || fetch(:application)
+
+role :app, %W{ deploy@#{deploy_host} }
+role :web, %W{ deploy@#{deploy_host} }
+role :db,  %W{ deploy@#{deploy_host} }
 
 set :deploy_to, '/var/www/staging.brewbit.com'
 
