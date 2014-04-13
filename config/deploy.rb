@@ -16,9 +16,6 @@ set :scm, :git
 # Default value for :pty is false
 # set :pty, true
 
-# Default value for linked_dirs is []
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets}
-
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
