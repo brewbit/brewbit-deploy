@@ -1,5 +1,5 @@
 
-set :repo_url, 'git@github.com:brewbit/brewbit-spree.git'
+set :repo_url, 'git@github.com:brewbit/brewbit.com.git'
 
 set :linked_files, ['.env']
 
