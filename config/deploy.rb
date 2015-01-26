@@ -20,8 +20,9 @@ set :scm, :git
 # set :keep_releases, 5
 
 set :ssh_options, {
-  keys: %w(~/.ssh/brewbit ~/.ssh/id_rsa),
+  keys: %w(~/.ssh/id_rsa),
   forward_agent: true,
+  paranoid: true,
   auth_methods: %w(publickey)
 }
 
@@ -45,7 +46,7 @@ namespace :deploy do
         execute :sudo, "rm -f /etc/init/#{fetch(:application)}*"
     
         within release_path do
-          execute :sudo, "bundle exec foreman export upstart /etc/init -a #{fetch(:application)} -f Procfile.#{fetch(:stage).split(':').last} -u deploy -c app=1"
+          execute :sudo, "bundle exec foreman export upstart /etc/init -a #{fetch(:application)} -f Procfile -e .env,environments/#{fetch(:stage).split(':').last}.env -u deploy -c app=1"
         end
     
         # Insert command to start service at boot time NOTE this does not work on the mac version of sed which is not GNU sed
