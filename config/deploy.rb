@@ -19,6 +19,8 @@ set :scm, :git
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+set :whenever_roles, ->{ :web }
+
 set :ssh_options, {
   keys: %w(~/.ssh/id_rsa),
   forward_agent: true,
@@ -46,6 +48,7 @@ namespace :deploy do
         execute :sudo, "rm -f /etc/init/#{fetch(:application)}*"
     
         within release_path do
+          execute "touch .env"
           execute :sudo, "bundle exec foreman export upstart /etc/init -a #{fetch(:application)} -f Procfile -e .env,environments/#{fetch(:stage).split(':').last}.env -u deploy -c app=1"
         end
     

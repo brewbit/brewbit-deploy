@@ -8,3 +8,4 @@ gem 'capistrano', group: :development
 gem 'capistrano-bundler', group: :development
 gem 'capistrano-rails', group: :development
 gem 'capistrano-multiconfig', group: :development
+gem 'whenever', group: :development

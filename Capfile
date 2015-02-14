@@ -2,6 +2,7 @@
 require 'capistrano/multiconfig'
 require 'capistrano/deploy'
 require 'capistrano/bundler'
+require "whenever/capistrano"
 
 # TODO - this is a total hack... There must be a better way...
 config = Rake.application.top_level_tasks[0].split(':').first
