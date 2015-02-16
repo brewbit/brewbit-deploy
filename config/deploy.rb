@@ -20,6 +20,7 @@ set :scm, :git
 # set :keep_releases, 5
 
 set :whenever_roles, ->{ :web }
+set :whenever_update_flags, ->{ "--update-crontab #{fetch :whenever_identifier} --set #{fetch :whenever_variables} --user deploy" }
 
 set :ssh_options, {
   keys: %w(~/.ssh/id_rsa),
